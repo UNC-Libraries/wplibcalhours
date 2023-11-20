@@ -21,11 +21,13 @@
 /* UNC additions */
 .hours-list-view {
     display: grid;
+    grid-template-columns: 160px auto;
     grid-auto-flow: column;
-    grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(4, 1fr);
+    list-style-type: none;
     margin-top: 0 !important;
     padding-left: 5px !important;
+    text-align: left;
 }
 
 .hours-list-view-stacked {
@@ -34,9 +36,7 @@
 }
 
 .hours-list-view li {
-    display: inline-flex;
-    justify-content: flex-start;
-    width: 195px;
+    padding-bottom: 5px;
 }
 .hours-day {
     font-weight: bold;
@@ -70,6 +70,10 @@
 .hours-display-stacked h2 {
     font-size: 2rem;
     text-align: left;
+}
+
+.hours-more {
+    margin-top: 25px;
 }
 
 .hours-more button {

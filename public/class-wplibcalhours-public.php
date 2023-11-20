@@ -197,7 +197,7 @@ class WpLibCalHours_Public {
             $date->add(new \DateInterval("P${i}D"));
             $key = $date->format('Y-m-d');
 
-            $day = array('date' => $date);
+            $day = ['date' => $date];
             $day['text'] = (array_key_exists($key, $data)) ? $data[$key] : __('n/a', 'wplibcalhours');
             $day['is_today'] = $key === $today->format('Y-m-d');
             $days[] = $day;

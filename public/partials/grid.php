@@ -38,7 +38,7 @@ $base_location = $this->getBaseLocation($location);
                     $day = $chunked_week[$i];
                     $today = $day['is_today'];
                     $date = $day['date'];
-                    $day_text = ($today) ? 'Today' : $date->format('D'); ?>
+                    $day_text = ($today) ? 'Today' : $date->format('l'); ?>
 
                     <li <?php echo $this->setToday($today) ?>>
                         <?php if ($week_number > 0): ?>
