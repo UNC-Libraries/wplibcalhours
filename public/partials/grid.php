@@ -1,5 +1,10 @@
 <?php
-$first_day = $days[array_key_first($days)]['text']['status'];
+try {
+    $first_day = $days[array_key_first($days)]['text']['status'];
+} catch (TypeError $e) {
+    $first_day = 'closed';
+}
+
 $open_class = ($first_day == 'open') ? 'circle-green' : 'circle-red';
 $stacked = $attrs['display_type'] == 'stacked';
 $hours_display = ($stacked) ? '-stacked' : '';
@@ -38,7 +43,7 @@ $base_location = $this->getBaseLocation($location);
                     $day = $chunked_week[$i];
                     $today = $day['is_today'];
                     $date = $day['date'];
-                    $day_text = ($today) ? 'Today' : $date->format('D'); ?>
+                    $day_text = ($today) ? 'Today' : $date->format('l'); ?>
 
                     <li <?php echo $this->setToday($today) ?>>
                         <?php if ($week_number > 0): ?>
