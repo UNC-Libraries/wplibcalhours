@@ -1,5 +1,10 @@
 <?php
-$first_day = $days[array_key_first($days)]['text']['status'];
+try {
+    $first_day = $days[array_key_first($days)]['text']['status'];
+} catch (TypeError $e) {
+    $first_day = 'closed';
+}
+
 $open_class = ($first_day == 'open') ? 'circle-green' : 'circle-red';
 $stacked = $attrs['display_type'] == 'stacked';
 $hours_display = ($stacked) ? '-stacked' : '';
