@@ -47,13 +47,13 @@ The short code has the following configuration options.
 
 `[wplibcalhours location="Parnassus Library" num_weeks=1]` - Prints the opening hours for the "Parnassus Library" for the next week (starting today).
 
-`[wplibcalhours location="Art (Sloane) Library" display_type="grid"]` - Prints the opening hours for the "Art" in a grid layout (starting today).
+`[wplibcalhours location="Art Library (Sloane)" display_type="grid"]` - Prints the opening hours for the "Art" in a grid layout (starting today).
 
-`[wplibcalhours location="Art (Sloane) Library" display_type="stacked"]` - Prints the opening hours for the "Art Library" in a stacked layout (starting today).
+`[wplibcalhours location="Art Library (Sloane)" display_type="stacked"]` - Prints the opening hours for the "Art Library" in a stacked layout (starting today).
 
-`[wplibcalhours location="Art (Sloane) Library" today_only=true]` - Prints the opening hours for the "Art Library" for today.
+`[wplibcalhours location="Art Library (Sloane)" today_only=true]` - Prints the opening hours for the "Art Library" for today.
 
-`[wplibcalhours location="Art (Sloane) Library" today_only=true show_status_icon=false]` - Prints the opening hours for the "Art Library" for today without the open/closed status icon.
+`[wplibcalhours location="Art Library (Sloane)" today_only=true show_status_icon=false]` - Prints the opening hours for the "Art Library" for today without the open/closed status icon.
 ## API
 
 This plugin also exposes opening hours via a read-only, public API endpoint. 
