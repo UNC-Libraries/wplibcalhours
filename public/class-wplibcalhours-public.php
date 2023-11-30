@@ -262,9 +262,9 @@ class WpLibCalHours_Public {
         $ignore_cache = (boolean) get_option('wplibcalhours_ignore_cache');
         $timestamp    = current_time('timestamp');
         $now          = date('Y-m-d', $timestamp);
+        $rhett = [];
         try {
             $data  = $this->client->getRawData($ignore_cache);
-            $rhett = [];
             foreach ($data['locations'] as $location) {
                 $rhett[ $location['name'] ] = [];
                 $timetable                  = $this->extract_hours($location['weeks']);
