@@ -77,10 +77,17 @@
 }
 
 .hours-more button {
+    border: 2px solid #13294b;
     border-radius: 5px;
     padding: 8px 10px;
     color: white;
     min-width: 130px;
+}
+
+.hours-more button:hover,
+.hours-more button:focus {
+    background-color: transparent;
+    color: #13294b;
 }
 
 .circle {
