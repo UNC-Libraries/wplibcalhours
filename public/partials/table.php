@@ -19,15 +19,4 @@
         </tr>
     <?php endfor ?>
     </tbody>
-
-    <?php if ($num_weeks > 1): ?>
-        <tfoot>
-            <tr>
-                <td colspan="3">
-                    <a class="prev hidden">&laquo; <?php __( 'previous', 'wplibcalhours' ) ?></a>
-                    <a class="next"><?php  __( 'next', 'wplibcalhours' ) ?> &raquo;</a>
-                </td>
-            </tr>
-        </tfoot>
-    <?php endif ?>
 </table>

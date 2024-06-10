@@ -60,8 +60,3 @@ $base_location = $this->getBaseLocation($location);
             <?php endif ?>
         <?php endforeach ?>
     </div>
-<?php if (count($chunked_weeks) > 1): ?>
-    <div class="hours-more">
-        <button id="<?php echo $base_location ?>">View all hours</button>
-    </div>
-<?php endif ?>
