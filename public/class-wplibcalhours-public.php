@@ -236,10 +236,10 @@ return $all_days_raw;
                         }
                 }
 
-                if ($text == 'n/a' && array_key_exists('rendered', $day_raw)
+             /*   if ($text == 'n/a' && array_key_exists('rendered', $day_raw)
                     && str_contains($day_raw['rendered'], '24')) {
                     $text = $day_raw['rendered'];
-                }
+                }*/
 
                 $days[$day_raw['date']] = ['hours' => $text, 'status' => $this->currentlyOpen($day_raw['times'])];
             }
