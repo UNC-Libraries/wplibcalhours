@@ -298,13 +298,13 @@ class WpLibCalHours_Public {
             $open = trim($hours[0]);
             $close = trim($hours[1]);
             if (str_contains($open, 'am') && str_contains($close, '24')) {
-                $start_hour = explode('am', $open)[0];
+                $start_hour = (int) explode('am', $open)[0];
                 if ($this->currentHour() >= $start_hour) {
                     return 'open';
                 }
             }
             if (str_contains($open, '24') && str_contains($close, 'pm')) {
-                $close_hour = explode('pm', $close)[0];
+                $close_hour = (int) explode('pm', $close)[0] + 12;
                 if ($this->currentHour() <= $close_hour) {
                     return 'open';
                 }
@@ -313,12 +313,17 @@ class WpLibCalHours_Public {
         return 'closed';
     }
 
+    /**
+     * @return string Gives the current hour in 24 format
+     * @throws DateInvalidTimeZoneException
+     * @throws DateMalformedStringException
+     */
     public function currentHour(): string
     {
         $tz = 'America/New_York';
         $tz_obj = new DateTimeZone($tz);
-        $today = new DateTime("now", $tz_obj);
-        return $today->format('h');
+        $today = new DateTime('now', $tz_obj);
+        return (int) $today->format('G');
     }
 
     /**
