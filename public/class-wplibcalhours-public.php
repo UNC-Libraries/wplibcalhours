@@ -212,7 +212,7 @@ class WpLibCalHours_Public {
         foreach ($weeks_raw_data as $week_raw) {
             $all_days_raw = array_merge($all_days_raw, array_values($week_raw));
         }
-return $all_days_raw;
+
         $days = [];
         foreach ($all_days_raw as $day_raw) {
             if (array_key_exists('times', $day_raw) && array_key_exists('date', $day_raw)) {
@@ -236,10 +236,10 @@ return $all_days_raw;
                         }
                 }
 
-             /*   if ($text == 'n/a' && array_key_exists('rendered', $day_raw)
+                if ($text == 'n/a' && array_key_exists('rendered', $day_raw)
                     && str_contains($day_raw['rendered'], '24')) {
                     $text = $day_raw['rendered'];
-                }*/
+                }
 
                 $days[$day_raw['date']] = ['hours' => $text, 'status' => $this->currentlyOpen($day_raw['times'])];
             }
