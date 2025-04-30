@@ -236,6 +236,11 @@ class WpLibCalHours_Public {
                         }
                 }
 
+                if ($text == 'n/a' && array_key_exists('rendered', $day_raw)
+                    && str_contains($day_raw['rendered'], '24')) {
+                    $text = $day_raw['rendered'];
+                }
+
                 $days[$day_raw['date']] = ['hours' => $text, 'status' => $this->currentlyOpen($day_raw['times'])];
             }
         }
@@ -287,7 +292,33 @@ class WpLibCalHours_Public {
         if (array_key_exists('currently_open', $day_info) && $day_info['currently_open'] == 1) {
             return 'open';
         }
+        // Deal with hours that have an opening or closing time, but the other side is 24 hours
+        if (array_key_exists('note', $day_info) && str_contains($day_info['note'], '24')) {
+            $hours = explode('-', $day_info['note']);
+            $open = trim($hours[0]);
+            $close = trim($hours[1]);
+            if (str_contains($open, 'am') && str_contains($close, '24')) {
+                $start_hour = explode('am', $open)[0];
+                if ($this->currentHour() >= $start_hour) {
+                    return 'open';
+                }
+            }
+            if (str_contains($open, '24') && str_contains($close, 'pm')) {
+                $close_hour = explode('pm', $close)[0];
+                if ($this->currentHour() <= $close_hour) {
+                    return 'open';
+                }
+            }
+        }
         return 'closed';
+    }
+
+    public function currentHour(): string
+    {
+        $tz = 'America/New_York';
+        $tz_obj = new DateTimeZone($tz);
+        $today = new DateTime("now", $tz_obj);
+        return $today->format('h');
     }
 
     /**
