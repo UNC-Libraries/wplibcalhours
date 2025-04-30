@@ -313,7 +313,8 @@ class WpLibCalHours_Public {
         return 'closed';
     }
 
-    public function currentHour() {
+    public function currentHour(): string
+    {
         $tz = 'America/New_York';
         $tz_obj = new DateTimeZone($tz);
         $today = new DateTime("now", $tz_obj);
