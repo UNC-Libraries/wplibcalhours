@@ -292,6 +292,7 @@ class WpLibCalHours_Public {
         if (array_key_exists('currently_open', $day_info) && $day_info['currently_open'] == 1) {
             return 'open';
         }
+        // Deal with hours that have an opening or closing time, but the other side is 24 hours
         if (array_key_exists('note', $day_info) && str_contains($day_info['note'], '24')) {
             $hours = explode('-', $day_info['note']);
             $open = trim($hours[0]);
@@ -299,6 +300,12 @@ class WpLibCalHours_Public {
             if (str_contains($open, 'am') && str_contains($close, '24')) {
                 $start_hour = explode('am', $open)[0];
                 if ($this->currentHour() >= $start_hour) {
+                    return 'open';
+                }
+            }
+            if (str_contains($open, '24') && str_contains($close, 'pm')) {
+                $close_hour = explode('pm', $close)[0];
+                if ($this->currentHour() <= $close_hour) {
                     return 'open';
                 }
             }
