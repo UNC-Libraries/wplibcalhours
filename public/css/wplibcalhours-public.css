@@ -96,3 +96,25 @@
         display: block;
     }
 }
+
+/* Spacy occupancy classes */
+.spacy {
+    font-size: .95rem;
+}
+
+.spacy.text-success {
+    color: #198754;
+}
+
+.spacy.text-danger {
+    color: #dc3545;
+}
+
+.spacy.text-warning {
+    color: #ffc107;
+}
+
+/* Override default astra ul style */
+.hours-list-view:has(+ .spacy) {
+    margin-bottom: 0 !important;
+}

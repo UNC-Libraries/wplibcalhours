@@ -58,6 +58,15 @@ class WpLibCalHours {
     protected WpLibCalHours_Client $client;
 
     /**
+     * The Spacy API client.
+     *
+     * @since    1.0.0
+     * @access   protected
+     * @var      WpLibCalHours_Occupancy_Client $client The Spacy API client.
+     */
+    protected WpLibCalHours_Occupancy_Client $spacy_client;
+
+    /**
      * The base name of the plugin.
      * @access   protected
      * @var      string $plugin_basename The base name of this plugin.
@@ -133,9 +142,15 @@ class WpLibCalHours {
          */
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-wplibcalhours-client.php';
 
+        /**
+         * The Spacy API client class.
+         */
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-wplibcalhours-occupancy-client.php';
+
         $this->loader = new WpLibCalHours_Loader();
         $url = get_option(self::PLUGIN_NAME . '_api_url');
         $this->client = new WpLibCalHours_Client(self::PLUGIN_NAME, $this->version, $url);
+        $this->spacy_client = new WpLibCalHours_Occupancy_Client(self::PLUGIN_NAME, $this->version);
     }
 
     /**
@@ -173,7 +188,8 @@ class WpLibCalHours {
     private function define_public_hooks() {
         $plugin_public = new WpLibCalHours_Public(self::PLUGIN_NAME,
             $this->get_version(),
-            $this->get_client());
+            $this->get_client(),
+            $this->get_spacy_client());
 
         $this->loader->add_action('init', $plugin_public, 'register_shortcodes');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
@@ -216,5 +232,14 @@ class WpLibCalHours {
     public function get_client(): WpLibCalHours_Client
     {
         return $this->client;
+    }
+
+    /**
+     * Returns the LibCal API client.
+
+     */
+    public function get_spacy_client(): WpLibCalHours_Occupancy_Client
+    {
+        return $this->spacy_client;
     }
 }

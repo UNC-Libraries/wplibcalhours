@@ -50,16 +50,20 @@ class WpLibCalHours_Public {
      */
     private WpLibCalHours_Client $client;
 
+    private WpLibCalHours_Occupancy_Client $spacy_client;
+
     /**
      * Initialize the class and set its properties.
      * @param      string $plugin_name The name of the plugin.
      * @param      string $version The version of this plugin.
      * @param      WpLibCalHours_Client $client The LibCal API client.
      */
-    public function __construct($plugin_name, $version, WpLibCalHours_Client $client) {
+    public function __construct(string $plugin_name, string $version, WpLibCalHours_Client $client,
+                                WpLibCalHours_Occupancy_Client $spacy_client) {
         $this->plugin_name = $plugin_name;
         $this->version     = $version;
         $this->client      = $client;
+        $this->spacy_client = $spacy_client;
     }
 
     /**
@@ -127,10 +131,12 @@ class WpLibCalHours_Public {
             'display_type' => 'grid',
             'today_only' => false,
             'show_status_icon' => true,
+            'show_occupancy' => false,
             'num_weeks' => self::DEFAULT_NUM_WEEKS
         ], $attrs);
 
         $show_status_icon = $attrs['show_status_icon'] == 'true';
+        $show_occupancy = $attrs['show_occupancy'] == 'true';
         $num_weeks = (int) $attrs['num_weeks'];
 
         $today_only = $attrs['today_only'] == 'true';
@@ -147,10 +153,15 @@ class WpLibCalHours_Public {
         $location = strip_tags($attrs['location']);
 
         $data = [];
+        $occupancy_data = [];
 
         try {
             $data = $this->client->getHours($location, $ignore_cache);
             $data = $this->extract_hours($data['weeks']);
+
+            if ($show_occupancy) {
+                $occupancy_data = $this->spacy_client->getOccupancyData();
+            }
         } catch (\Exception $e) {
             error_log($e->getMessage());
         }

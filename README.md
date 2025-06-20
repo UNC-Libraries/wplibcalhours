@@ -40,6 +40,7 @@ The short code has the following configuration options.
 - `num_weeks` ... The number of weeks of opening hours to display. Accepted values are `1`, `2` and `3`. Defaults to `3`. *(optional)*
 - `show_status_icon` ... Show status icon for whether a library is open. Defaults to `true`. *(optional)*
 - `today_only` ... Show hours for the current day only. Note if this is set to `true` it supersedes the `num_week` option. Defaults to `false`. *(optional)*
+- `show_occupancy` ... Show the location occupancy level. Defaults to `false`. *(optional)*
 
 ### Examples
 
@@ -47,16 +48,21 @@ The short code has the following configuration options.
 
 `[wplibcalhours location="Parnassus Library" num_weeks=1]` - Prints the opening hours for the "Parnassus Library" for the next week (starting today).
 
-`[wplibcalhours location="Art Library (Sloane)" display_type="grid"]` - Prints the opening hours for the "Art" in a grid layout (starting today).
+`[wplibcalhours location="Art Library" display_type="grid"]` - Prints the opening hours for the "Art" in a grid layout (starting today).
 
-`[wplibcalhours location="Art Library (Sloane)" display_type="stacked"]` - Prints the opening hours for the "Art Library" in a stacked layout (starting today).
+`[wplibcalhours location="Art Library" display_type="stacked"]` - Prints the opening hours for the "Art Library" in a stacked layout (starting today).
 
-`[wplibcalhours location="Art Library (Sloane)" today_only=true]` - Prints the opening hours for the "Art Library" for today.
+`[wplibcalhours location="Art Library" today_only=true]` - Prints the opening hours for the "Art Library" for today.
 
-`[wplibcalhours location="Art Library (Sloane)" today_only=true show_status_icon=false]` - Prints the opening hours for the "Art Library" for today without the open/closed status icon.
+`[wplibcalhours location="Art Library" today_only=true show_status_icon=false]` - Prints the opening hours for the "Art Library" for today without the open/closed status icon.
+
+`[wplibcalhours location="Art Library" display_type="grid" show_occupancy=true]` - Prints the opening hours for the "Art" in a grid layout (starting today) and displaying a building occupancy note about how busy the location is.
+### Occupancy
+
+
 ## API
 
-This plugin also exposes opening hours via a read-only, public API endpoint. 
+This plugin also exposes opening hours via a read-only, public API endpoint.
 
 Requesting the path `/wp-admin/admin-ajax.php?action=wplibcalhours` on your site will yield
 a JSON-formatted payload comprised of dates and opening hours, keyed by their location names.
@@ -71,45 +77,45 @@ Three locations, the current date is January 3rd.
 
 ```javascript
 {
-  "Parnassus Library": [
-    {
-      "day": "Wed",
-      "date": "Jan 3",
-      "text": "7:45am - 10pm"
-    },
-    {
-      "day": "Thu",
-      "date": "Jan 4",
-      "text": "7:45am - 10pm"
-    }
-    /* ... */
-  ],
-  "Mission Bay Library": [
-    {
-      "day": "Wed",
-      "date": "Jan 3",
-      "text": "9am - 6pm"
-    },
-    {
-      "day": "Thu",
-      "date": "Jan 4",
-      "text": "9am - 6pm"
-    }
-    /* ... */
-  ],
-  "Mission Bay Hub": [
-    {
-      "day": "Wed",
-      "date": "Jan 3",
-      "text": "24 hours"
-    },
-    {
-      "day": "Thu",
-      "date": "Jan 4",
-      "text": "24 hours"
-    }
-    /* ... */
-  ]
+    "Parnassus Library": [
+        {
+            "day": "Wed",
+            "date": "Jan 3",
+            "text": "7:45am - 10pm"
+        },
+        {
+            "day": "Thu",
+            "date": "Jan 4",
+            "text": "7:45am - 10pm"
+        }
+        /* ... */
+    ],
+        "Mission Bay Library": [
+        {
+            "day": "Wed",
+            "date": "Jan 3",
+            "text": "9am - 6pm"
+        },
+        {
+            "day": "Thu",
+            "date": "Jan 4",
+            "text": "9am - 6pm"
+        }
+        /* ... */
+    ],
+        "Mission Bay Hub": [
+        {
+            "day": "Wed",
+            "date": "Jan 3",
+            "text": "24 hours"
+        },
+        {
+            "day": "Thu",
+            "date": "Jan 4",
+            "text": "24 hours"
+        }
+        /* ... */
+    ]
 }
 ```
 

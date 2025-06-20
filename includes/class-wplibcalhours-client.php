@@ -35,7 +35,7 @@ class WpLibCalHours_Client {
     private string $version;
 
     /**
-     * The API endpoint URL.
+     * The API endpoint URL for hours.
      * @access protected
      * @var string $url The API endpoint.
      */
