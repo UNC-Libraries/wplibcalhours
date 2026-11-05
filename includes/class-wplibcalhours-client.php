@@ -112,8 +112,11 @@ class WpLibCalHours_Client {
         }
 
         $response = wp_remote_get($this->url, [
-            'timeout' => 10,
-            'headers' => ['Accept' => 'application/json'],
+            'timeout'             => 10,
+            'redirection'         => 0,
+            'limit_response_size' => 1024 * 1024,
+            'reject_unsafe_urls'  => true,
+            'headers' => ['Accept' => 'application/json']
         ]);
         if(is_wp_error($response) || wp_remote_retrieve_response_code($response) != 200) {
             throw new \Exception($response->get_error_message());
