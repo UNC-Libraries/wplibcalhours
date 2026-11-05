@@ -144,7 +144,7 @@ class WpLibCalHours_Public {
         $num_days = $num_weeks * 7;
 
         $ignore_cache = (boolean) get_option('wplibcalhours_ignore_cache');
-        $location = strip_tags($attrs['location']);
+        $location = sanitize_text_field($attrs['location']);
 
         $data = [];
 
@@ -333,6 +333,23 @@ class WpLibCalHours_Public {
     public function hoursText($day): mixed
     {
         return is_array($day['text']) ? $day['text']['hours'] : $day['text'];
+    }
+
+    /**
+     * Escapes opening-hours text for HTML while preserving line breaks.
+     *
+     * The line breaks are added after each value has been escaped so that
+     * markup supplied by the API cannot be rendered in the page.
+     *
+     * @param array $day
+     * @return string
+     */
+    public function escapedHoursText($day): string
+    {
+        $hours_text = (string) $this->hoursText($day);
+        $hours = array_map('esc_html', explode('<br>', $hours_text));
+
+        return implode('<br>', $hours);
     }
 
     /**
