@@ -11,3 +11,7 @@ SSHKit::Backend::Netssh.configure do |ssh|
 end
 
 install_plugin Capistrano::SCM::Git
+
+SSHKit::Backend::Netssh.configure do |ssh|
+  ssh.transfer_method = :sftp
+end
