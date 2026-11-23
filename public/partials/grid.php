@@ -10,18 +10,18 @@ $stacked = $attrs['display_type'] == 'stacked';
 $hours_display = ($stacked) ? '-stacked' : '';
 $base_location = $this->getBaseLocation($location);
 ?>
-    <div id="<?php echo $base_location ?>-hours" class="hours-display<?php echo $hours_display ?>">
+    <div id="<?php echo esc_attr($base_location) ?>-hours" class="hours-display<?php echo esc_attr($hours_display) ?>">
         <?php if ($stacked): ?>
-            <h2><?php echo $location ?> Hours</h2>
+            <h2><?php echo esc_html($location) ?> Hours</h2>
         <?php endif ?>
 
         <?php if ($show_status_icon): ?>
             <div class="open-indicator">
                 <div class="circle <?php echo $open_class ?>"></div>
                 <div>
-                    <span class="open-text"><?php echo $first_day ?></span>
+                    <span class="open-text"><?php echo esc_html($first_day) ?></span>
                     <?php if ($first_day == 'open'):
-                        echo $this->openUntil($days[array_key_first($days)]);
+                        echo esc_html($this->openUntil($days[array_key_first($days)]));
                     endif ?>
                 </div>
             </div>
@@ -51,7 +51,7 @@ $base_location = $this->getBaseLocation($location);
                         <?php else: ?>
                             <div class="hours-day"><?php echo $day_text ?></div>
                         <?php endif ?>
-                        <div class="hours-text"><?php echo $this->hoursText($day) ?></div>
+                        <div class="hours-text"><?php echo $this->escapedHoursText($day) ?></div>
                     </li>
                 <?php endfor ?>
             </ul>

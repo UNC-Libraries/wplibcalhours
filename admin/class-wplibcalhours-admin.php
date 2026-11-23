@@ -45,6 +45,20 @@ class WpLibCalHours_Admin {
         $this->version     = $version;
     }
 
+    public function validate_api_url($value) {
+        $url = esc_url_raw(trim((string) $value));
+        $parts = wp_parse_url($url);
+        if (!$parts || ($parts['scheme'] ?? '') !== 'https') {
+            add_settings_error('wplibcalhours_api_url', 'invalid_url', 'Use an HTTPS LibCal endpoint.');
+            return get_option('wplibcalhours_api_url', '');
+        } else if (($parts['host'] ?? '') !== 'calendar.lib.unc.edu') {
+            add_settings_error('wplibcalhours_api_url', 'invalid_url', 'Use a LibCal endpoint on calendar.lib.unc.edu.');
+            return get_option('wplibcalhours_api_url', '');
+        }
+        // Also enforce the exact approved host(s) here.
+        return $url;
+    }
+
     /**
      * Add an options page under the Settings submenu
      */
@@ -86,7 +100,9 @@ class WpLibCalHours_Admin {
             $section_name,
             array('label_for' => $option_name)
        );
-        register_setting($this->plugin_name, $option_name, 'sanitize_text_field');
+        register_setting($this->plugin_name, $option_name, [
+            'sanitize_callback' => [$this, 'validate_api_url'],
+        ]);
 
         $option_name = $this->plugin_name . '_ignore_cache';
         add_settings_field(
